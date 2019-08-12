@@ -1,0 +1,8 @@
+CREATE TABLE `java_bt2`.`Untitled`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `MSSV` int(255) UNSIGNED NULL DEFAULT 0,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `gender` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
+  `cmnd` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+);
