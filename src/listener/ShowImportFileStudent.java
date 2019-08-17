@@ -31,6 +31,10 @@ import java.io.FileWriter;
 import java.io.*;
 import java.util.*;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 public class ShowImportFileStudent implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
@@ -57,41 +61,44 @@ public class ShowImportFileStudent implements ActionListener {
 			BufferedReader br = null;
 			String line = "";
 			String csvSplitBy = ",";
-			String[] arrStudent = new String[100];
-			ArrayList<Object> arrListStudent = new ArrayList<>();
+
+			SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+					.addAnnotatedClass(Student.class).buildSessionFactory();
+
+//			// create a Session
+			Session session = sessionFactory.openSession();
+
 			try {
 				br = new BufferedReader(new FileReader(csvFile));
 
-				System.out.println(System.getProperty("user.dir") + "/src/data/student.txt");
-				File file = new File(System.getProperty("user.dir") + "/src/data/student.txt");
-				
-				// if file doesnt exists, then create it
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-
-				OutputStream output = new FileOutputStream(System.getProperty("user.dir") + "/src/data/student.txt");
-
 				String headerLine = br.readLine();
 				System.out.println(headerLine);
+
 				while ((line = br.readLine()) != null) {
 
 					System.out.println(line);
 					String[] tmp = line.split(csvSplitBy);
 
-					Properties prop = new Properties();
+					System.out.println("Creating a new Student object...");
+					
+					String gender = "0";
+					if (tmp[3] == "Nam") {
+						gender = "1";
+					}
 
-					// set the properties value
-					prop.setProperty(tmp[1] + ".name", tmp[2]);
-					prop.setProperty(tmp[1] + ".sex", tmp[3]);
-					prop.setProperty(tmp[1] + ".passport_id", tmp[4]);
+					// create the Student object
+					Student student = new Student(tmp[1], tmp[2], gender, tmp[4]);
 
-					// save properties to project root folder
-					prop.store(output, null);
+					// start a transaction
+					session.beginTransaction();
 
-					System.out.println(prop);
+					// Save the Student object to the database
+					session.save(student);
 
-//			        oos.writeObject(map);
+					System.out.println("Java object saved to the database");
+					// commit the transaction
+					session.getTransaction().commit();
+
 
 				}
 
@@ -99,6 +106,9 @@ public class ShowImportFileStudent implements ActionListener {
 				exception.printStackTrace();
 			} catch (IOException ioexception) {
 				ioexception.printStackTrace();
+			} finally {
+
+				sessionFactory.close();
 			}
 
 		}
