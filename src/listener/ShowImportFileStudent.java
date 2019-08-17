@@ -65,7 +65,7 @@ public class ShowImportFileStudent implements ActionListener {
 			SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
 					.addAnnotatedClass(Student.class).buildSessionFactory();
 
-//			// create a Session
+			// create a Session
 			Session session = sessionFactory.openSession();
 
 			try {

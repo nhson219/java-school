@@ -10,24 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//public class Student implements Serializable {
-////	int MSSV;
-//	public String MSSV, name, sex, passport_id;
-//	
-//	public Student(String MSSV, String name, String sex, String passport_id) {
-//		this.MSSV = MSSV;
-//		this.name = name;
-//		this.sex = sex;
-//		this.passport_id = passport_id;
-//	}
-//	
-//	public void setData(String MSSV, String name, String sex, String passport_id) {
-//		this.MSSV = MSSV;
-//		this.name = name;
-//		this.sex = sex;
-//		this.passport_id = passport_id;
-//	}
-//}
 
 @Entity
 @Table(name = "student")
@@ -50,9 +32,6 @@ public class Student {
 	@Column(name = "cmnd")
 	private String cmnd;
 
-	public Student() {
-
-	}
 
 	public Student(String MSSV, String name, String gender, String cmnd) {
 		this.MSSV = MSSV;

@@ -8,6 +8,11 @@ import java.util.Arrays;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 // csv
@@ -18,7 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // import object schedule
-import object.Schedule;
+import object.Subject;
+import object.Student;
 
 // import java hash map
 import java.util.HashMap;
@@ -31,7 +37,11 @@ import java.io.FileWriter;
 import java.io.*;
 import java.util.*;
 
-public class ShowImportFileSchedule implements ActionListener {
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class ShowImportFileSubject implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
@@ -55,21 +65,15 @@ public class ShowImportFileSchedule implements ActionListener {
 			BufferedReader br = null;
 			String line = "";
 			String csvSplitBy = ",";
-			String[] arrSchedule = new String[100];
-			ArrayList<Object> arrListSchedule = new ArrayList<>();
+
+			SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+					.addAnnotatedClass(Student.class).buildSessionFactory();
+
+			// create a Session
+			Session session = sessionFactory.openSession();
 
 			try {
 				br = new BufferedReader(new FileReader(csvFile));
-
-				System.out.println(System.getProperty("user.dir") + "/src/data/schedule.txt");
-				File file = new File(System.getProperty("user.dir") + "/src/data/schedule.txt");
-				
-				// if file doesnt exists, then create it
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-
-				OutputStream output = new FileOutputStream(System.getProperty("user.dir") + "/src/data/schedule.txt");
 
 				String headerLine = br.readLine();
 				System.out.println(headerLine);
@@ -77,14 +81,20 @@ public class ShowImportFileSchedule implements ActionListener {
 
 					String[] tmp = line.split(csvSplitBy);
 
-					Properties prop = new Properties();
+					System.out.println("Creating a new Student object...");
 
-					// set the properties value
-					prop.setProperty(tmp[1] + ".name", tmp[2]);
-					prop.setProperty(tmp[1] + ".classroom", tmp[3]);
+					// create the Student object
+					Subject subject = new Subject(tmp[1], tmp[2], tmp[3]);
 
-					// save properties to project root folder
-					prop.store(output, null);
+					// start a transaction
+					session.beginTransaction();
+
+					// Save the Student object to the database
+					session.save(subject);
+
+					System.out.println("Java object saved to the database");
+					// commit the transaction
+					session.getTransaction().commit();
 
 				}
 
@@ -92,6 +102,9 @@ public class ShowImportFileSchedule implements ActionListener {
 				exception.printStackTrace();
 			} catch (IOException ioexception) {
 				ioexception.printStackTrace();
+			} finally {
+
+				sessionFactory.close();
 			}
 
 		}

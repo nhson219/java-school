@@ -1,7 +1,7 @@
 import java.awt.BorderLayout;
 import javax.swing.*;
 import listener.ShowImportFileStudent;
-import listener.ShowImportFileSchedule;
+import listener.ShowImportFileSubject;
 import listener.ShowImportFileScore;
 
 import org.hibernate.Session;
@@ -30,7 +30,7 @@ public class Home {
 		JButton btnImportScore = new JButton("Import Score");// creating instance of JButton
 
 		btnImportStudent.addActionListener(new ShowImportFileStudent());
-		btnImportSchedule.addActionListener(new ShowImportFileSchedule());
+		btnImportSchedule.addActionListener(new ShowImportFileSubject());
 		btnImportScore.addActionListener(new ShowImportFileScore());
 
 		buttonPanel.add(btnImportStudent);
