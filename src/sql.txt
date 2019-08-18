@@ -22,3 +22,5 @@ CREATE TABLE `java_bt2`.`Untitled`  (
   `score` float(10, 0) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
+ALTER TABLE `java_bt2`.`score` 
+ADD COLUMN `student_id` int(10) UNSIGNED NULL DEFAULT 0 AFTER `score`;

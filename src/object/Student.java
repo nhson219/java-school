@@ -80,9 +80,4 @@ public class Student {
 		this.cmnd = cmnd;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", firstName=" + MSSV + ", lastName=" + name + ", email=" + cmnd + "]";
-
-	}
 }

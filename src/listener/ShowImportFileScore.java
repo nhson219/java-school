@@ -8,6 +8,11 @@ import java.util.Arrays;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 // csv
@@ -17,7 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// import object Student
+// import object Score
 import object.Score;
 
 // import java hash map
@@ -30,6 +35,10 @@ import java.io.FileWriter;
 
 import java.io.*;
 import java.util.*;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class ShowImportFileScore implements ActionListener {
 
@@ -55,42 +64,44 @@ public class ShowImportFileScore implements ActionListener {
 			BufferedReader br = null;
 			String line = "";
 			String csvSplitBy = ",";
-			String[] arrScore = new String[100];
-			ArrayList<Object> arrListScore = new ArrayList<>();
+			
+			SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+					.addAnnotatedClass(Score.class).buildSessionFactory();
+
+			// create a Session
+			Session session = sessionFactory.openSession();
+			
 			try {
 				br = new BufferedReader(new FileReader(csvFile));
 
-				System.out.println(System.getProperty("user.dir") + "/src/data/score.txt");
-				File file = new File(System.getProperty("user.dir") + "/src/data/score.txt");
-				
-				// if file doesnt exists, then create it
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-
-				OutputStream output = new FileOutputStream(System.getProperty("user.dir") + "/src/data/score.txt");
-
 				String headerLine = br.readLine();
+				
+				System.out.println(headerLine);
+				
+				Integer dem = 0;
 				while ((line = br.readLine()) != null) {
+					dem++;
 
 					System.out.println(line);
 					String[] tmp = line.split(csvSplitBy);
+					
+					if (dem == 1) {
+						System.out.println("hello");
+						continue;
+					}
 
-					Properties prop = new Properties();
+					// create the Score object
+					Score score = new Score(tmp[1], tmp[2], Float.parseFloat(tmp[3]), Float.parseFloat(tmp[4]), Float.parseFloat(tmp[5]), Float.parseFloat(tmp[6]));
 
-					// set the properties value
-					prop.setProperty(tmp[1] + ".name", tmp[2]);
-					prop.setProperty(tmp[1] + ".score_gk", tmp[3]);
-					prop.setProperty(tmp[1] + ".score_ck", tmp[4]);
-					prop.setProperty(tmp[1] + ".another_score", tmp[5]);
-					prop.setProperty(tmp[1] + ".total_score", tmp[6]);
+					// start a transaction
+					session.beginTransaction();
 
-					// save properties to project root folder
-					prop.store(output, null);
+					// Save the Score object to the database
+					session.save(score);
 
-					System.out.println(prop);
-
-//			        oos.writeObject(map);
+					System.out.println("Java object saved to the database");
+					// commit the transaction
+					session.getTransaction().commit();
 
 				}
 
@@ -98,6 +109,8 @@ public class ShowImportFileScore implements ActionListener {
 				exception.printStackTrace();
 			} catch (IOException ioexception) {
 				ioexception.printStackTrace();
+			} finally {
+				sessionFactory.close();
 			}
 
 		}

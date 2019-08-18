@@ -67,7 +67,7 @@ public class ShowImportFileSubject implements ActionListener {
 			String csvSplitBy = ",";
 
 			SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-					.addAnnotatedClass(Student.class).buildSessionFactory();
+					.addAnnotatedClass(Subject.class).buildSessionFactory();
 
 			// create a Session
 			Session session = sessionFactory.openSession();
@@ -77,11 +77,16 @@ public class ShowImportFileSubject implements ActionListener {
 
 				String headerLine = br.readLine();
 				System.out.println(headerLine);
+				
 				while ((line = br.readLine()) != null) {
 
 					String[] tmp = line.split(csvSplitBy);
+					
+//					if (tmp[1] instanceof String) {
+//						continue;
+//					}
 
-					System.out.println("Creating a new Student object...");
+					System.out.println("Creating a new Score object...");
 
 					// create the Student object
 					Subject subject = new Subject(tmp[1], tmp[2], tmp[3]);

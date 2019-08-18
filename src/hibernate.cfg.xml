@@ -30,6 +30,7 @@
       <!-- List of XML mapping files -->
       <mapping resource = "Student.hbm.xml"/>
       <mapping resource = "Subject.hbm.xml"/>
+      <mapping resource = "Score.hbm.xml"/>
       
    </session-factory>
 </hibernate-configuration>

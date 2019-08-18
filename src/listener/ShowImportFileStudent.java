@@ -107,7 +107,6 @@ public class ShowImportFileStudent implements ActionListener {
 			} catch (IOException ioexception) {
 				ioexception.printStackTrace();
 			} finally {
-
 				sessionFactory.close();
 			}
 

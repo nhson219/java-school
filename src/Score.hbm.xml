@@ -1,1 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="object.Score" table="score">
+		<id name="id" column="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="name" column="name"></property>
+		<property name="score_gk" column="score_gk"></property>
+		<property name="score_ck" column="score_ck"></property>
+		<property name="score_different" column="score_different"></property>
+		<property name="score" column="score"></property>
+		<property name="student_id" column="student_id"></property>
+	</class>
+</hibernate-mapping>
