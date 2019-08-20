@@ -1,7 +1,11 @@
 import java.awt.BorderLayout;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.swing.*;
 import listener.ShowImportFileStudent;
 import listener.ShowImportFileSubject;
+import listener.ShowAddStudentDialog;
 import listener.ShowImportFileScore;
 
 import org.hibernate.Session;
@@ -9,6 +13,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import object.Student;
+import object.Score;
+import object.Subject;
+
 
 public class Home {
 	public static void main(String[] args) {
@@ -19,58 +26,108 @@ public class Home {
 		JPanel subPanelStudent = new JPanel();
 		JPanel subPanelSchedule = new JPanel();
 		JPanel subPanelScore = new JPanel();
+		JPanel buttonPanelLeft = new JPanel();
 
 		JTabbedPane tp = new JTabbedPane();
-		tp.add("Student", subPanelStudent);
-		tp.add("Schedule", subPanelSchedule);
-		tp.add("Score", subPanelScore);
+
 
 		JButton btnImportStudent = new JButton("Import Student");// creating instance of JButton
 		JButton btnImportSchedule = new JButton("Import Schedule");// creating instance of JButton
 		JButton btnImportScore = new JButton("Import Score");// creating instance of JButton
+		JButton btnAddStudent = new JButton("Add Student");
 
 		btnImportStudent.addActionListener(new ShowImportFileStudent());
 		btnImportSchedule.addActionListener(new ShowImportFileSubject());
 		btnImportScore.addActionListener(new ShowImportFileScore());
+		btnAddStudent.addActionListener(new ShowAddStudentDialog());
 
 		buttonPanel.add(btnImportStudent);
 		buttonPanel.add(btnImportSchedule);
 		buttonPanel.add(btnImportScore);
 
+		
+		
+		
+		Student student = new Student();
+		List listStudent = student.listStudent();
+		Object[][] tableDataStudent = new Object[listStudent.size()][4];
+
+		int index = 0;
+		for (Iterator iterator = listStudent.iterator(); iterator.hasNext();){
+            Student currentStudent = (Student) iterator.next(); 
+            tableDataStudent[index][0] = currentStudent.getMSSV();
+			tableDataStudent[index][1] = currentStudent.getName();
+			tableDataStudent[index][2] = currentStudent.getCMND();
+			tableDataStudent[index][3] = currentStudent.getGender();
+		    // and so forth
+			index++;
+         }
+		
+		String columnStudent[] = { "MSSV", "Họ Tên", "Giới tính ", "CMND" };
+		JTable jtStudent = new JTable(tableDataStudent, columnStudent);
+		JScrollPane spStudent = new JScrollPane(jtStudent);
+		
+		
+		Score score = new Score();
+		List listScore = score.listScore();
+		Object[][] tableDataScore = new Object[listScore.size()][7];
+
+		int indexScore = 0;
+		for (Iterator iterator = listScore.iterator(); iterator.hasNext();){
+			Score currentScore = (Score) iterator.next(); 
+			tableDataScore[indexScore][0] = currentScore.getStudent_id();
+			tableDataScore[indexScore][1] = currentScore.getName();
+			tableDataScore[indexScore][2] = currentScore.getScore_gk();
+			tableDataScore[indexScore][3] = currentScore.getScore_ck();
+			tableDataScore[indexScore][4] = currentScore.getScore_different();
+			tableDataScore[indexScore][5] = currentScore.getScore();
+		    // and so forth
+			indexScore++;
+         }
+		
+		String columnScore[] = { "MSSV", "Họ Tên", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm tổng"};
+		JTable jtScore = new JTable(tableDataScore, columnScore);
+		JScrollPane spScore = new JScrollPane(jtScore);
+
+		
+		Subject subject = new Subject();
+		List listSubject = subject.listSubject();
+		Object[][] tableDataSubject = new Object[listSubject.size()][3];
+
+		int indexSubject = 0;
+		for (Iterator iterator = listSubject.iterator(); iterator.hasNext();){
+			Subject currentSubject = (Subject) iterator.next(); 
+			tableDataSubject[indexSubject][0] = currentSubject.getCode();
+			tableDataSubject[indexSubject][1] = currentSubject.getName();
+			tableDataSubject[indexSubject][2] = currentSubject.getRoom();
+		    // and so forth
+			indexSubject++;
+         }
+		
+		String columnSchedule[] = { "ID", "Môn học", "Phòng học"};
+		JTable jtSchedule = new JTable(tableDataSubject, columnSchedule);
+		JScrollPane spSchedule = new JScrollPane(jtSchedule);
+		
+		subPanelStudent.add(spStudent);
+		subPanelScore.add(spScore);
+		subPanelSchedule.add(spSchedule);
+
+
+
+		tp.add("Student", subPanelStudent);
+		tp.add("Schedule", subPanelSchedule);
+		tp.add("Score", subPanelScore);
+		
+		
+		buttonPanelLeft.add(btnAddStudent);
+		
+		
 		f.add(buttonPanel, BorderLayout.NORTH);
 		f.add(tp, BorderLayout.CENTER);
+		f.add(buttonPanelLeft, BorderLayout.WEST);
 
 		f.setSize(800, 500);// 800 width and 500 height
 //		f.setLayout(null);// using no layout managers
 		f.setVisible(true);
-
-//		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-//				.addAnnotatedClass(Student.class).buildSessionFactory();
-//
-//		// create a Session
-//		Session session = sessionFactory.getCurrentSession();
-//
-//		try {
-//
-//			System.out.println("Creating a new Student object...");
-//
-//			// create the Student object
-//			Student student = new Student("123", "test", "1", "male");
-//
-//			// start a transaction
-//			session.beginTransaction();
-//
-//			// Save the Student object to the database
-//			session.save(student);
-//
-//			System.out.println("Java object saved to the database");
-//			// commit the transaction
-//			session.getTransaction().commit();
-//
-//		} finally {
-//
-//			sessionFactory.close();
-//		}
-
 	}
 }

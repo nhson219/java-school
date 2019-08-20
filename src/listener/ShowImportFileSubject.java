@@ -89,7 +89,8 @@ public class ShowImportFileSubject implements ActionListener {
 					System.out.println("Creating a new Score object...");
 
 					// create the Student object
-					Subject subject = new Subject(tmp[1], tmp[2], tmp[3]);
+					Subject subject = new Subject();
+					subject.insertSubject(tmp[1], tmp[2], tmp[3]);
 
 					// start a transaction
 					session.beginTransaction();

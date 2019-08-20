@@ -91,7 +91,8 @@ public class ShowImportFileScore implements ActionListener {
 					}
 
 					// create the Score object
-					Score score = new Score(tmp[1], tmp[2], Float.parseFloat(tmp[3]), Float.parseFloat(tmp[4]), Float.parseFloat(tmp[5]), Float.parseFloat(tmp[6]));
+					Score score = new Score();
+					score.insertScore(tmp[1], tmp[2], Float.parseFloat(tmp[3]), Float.parseFloat(tmp[4]), Float.parseFloat(tmp[5]), Float.parseFloat(tmp[6]));
 
 					// start a transaction
 					session.beginTransaction();

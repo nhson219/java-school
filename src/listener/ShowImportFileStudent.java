@@ -87,7 +87,8 @@ public class ShowImportFileStudent implements ActionListener {
 					}
 
 					// create the Student object
-					Student student = new Student(tmp[1], tmp[2], gender, tmp[4]);
+					Student student = new Student();
+					student.insertStudent(tmp[1], tmp[2], gender, tmp[4]);
 
 					// start a transaction
 					session.beginTransaction();

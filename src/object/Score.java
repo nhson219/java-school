@@ -10,8 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-public class Score {
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+import java.util.Iterator;
+
+public class Score {
+	private static SessionFactory factory;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -35,7 +45,9 @@ public class Score {
 	@Column(name = "score")
 	private float score;
 	
-	public Score(String student_id, String name, float score_gk, float score_ck, float score_different, float score) {
+	
+	
+	public void insertScore(String student_id, String name, float score_gk, float score_ck, float score_different, float score) {
 		this.student_id = student_id;
 		this.name = name;
 		this.score_gk = score_gk;
@@ -98,6 +110,37 @@ public class Score {
 
 	public void setScore(float score) {
 		this.score = score;
+	}
+	
+	public List listScore() {
+		try {
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+
+		Session session = factory.openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			Criteria cr = session.createCriteria(Score.class);
+
+			List score = cr.list();
+
+			tx.commit();
+			return score;
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+
 	}
 
 }

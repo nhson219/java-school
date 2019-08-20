@@ -10,8 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-public class Subject {
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
+public class Subject {
+	private static SessionFactory factory;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,7 +33,8 @@ public class Subject {
 	@Column(name = "room")
 	private String room;
 	
-	public Subject(String code, String name, String room) {
+	
+	public void insertSubject(String code, String name, String room) {
 		this.code = code;
 		this.name = name;
 		this.room = room;
@@ -62,6 +70,37 @@ public class Subject {
 
 	public void setRoom(String room) {
 		this.room = room;
+	}
+	
+	public List listSubject() {
+		try {
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+
+		Session session = factory.openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			Criteria cr = session.createCriteria(Subject.class);
+
+			List subject = cr.list();
+
+			tx.commit();
+			return subject;
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+
 	}
 
 }
