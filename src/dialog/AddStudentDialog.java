@@ -18,7 +18,10 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
 
 public class AddStudentDialog extends JDialog {
+	
 	public AddStudentDialog() {
+
+
 		JDialog dialog = new JDialog();
 
 		GroupLayout groupLayout = new GroupLayout(dialog.getContentPane());
@@ -27,16 +30,19 @@ public class AddStudentDialog extends JDialog {
 
 		JLabel lblMSSV = new JLabel("MSSV");
 		JTextField MSSV = new JTextField();
+		
 		JLabel lblName = new JLabel("Name");
 		JTextField txtName = new JTextField();
+		
 		JLabel lblGender = new JLabel("Gender");
 		JTextField txtGender = new JTextField();
+		
 		JLabel lblCMND = new JLabel("CMND");
 		JTextField txtCMND = new JTextField();
 		
 		JButton btnSubmit = new JButton();
 		JLabel lblbutton = new JLabel("button");
-		btnSubmit.addActionListener(new AddStudent());
+		btnSubmit.addActionListener(new AddStudent(MSSV, txtName, txtGender, txtCMND));
 
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);
@@ -66,5 +72,9 @@ public class AddStudentDialog extends JDialog {
 		dialog.setSize(300, 300);
 		dialog.setVisible(true);
 
+	}
+
+	public void test() {
+		System.out.print("adasda");
 	}
 }
