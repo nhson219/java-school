@@ -49,31 +49,35 @@ public class AddStudentDialog extends JDialog {
 		JLabel lblbutton = new JLabel("button");
 //		btnSubmit.addActionListener(new AddStudent(MSSV, txtName, txtGender, txtCMND));
 
-//		groupLayout.setAutoCreateGaps(true);
-//		groupLayout.setAutoCreateContainerGaps(true);
+		groupLayout.setAutoCreateGaps(true);
+		groupLayout.setAutoCreateContainerGaps(true);
 
-//		groupLayout.setHorizontalGroup(
-//					groupLayout.createSequentialGroup()
-//						.addGroup(
-//								groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-//									.addComponent(lblMSSV)
-//									.addComponent(lblName)
-//									.addComponent(lblGender)
-//									.addComponent(lblCMND)
-//									.addComponent(lblbutton)
-//								)
-//						.addGroup(
-//								groupLayout.createParallelGroup()
-//									.addComponent(MSSV)
-//									.addComponent(txtName)
-//									.addGroup(groupLayout.createSequentialGroup()
-//								              .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//								                  .addComponent(radio_male)
-//								                  .addComponent(radio_female)))
-//									.addComponent(txtCMND)
-//									.addComponent(btnSubmit)
-//								)
-//				);
+		groupLayout.setHorizontalGroup(
+					groupLayout.createSequentialGroup()
+						.addGroup(
+								groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+									.addComponent(lblMSSV)
+									.addComponent(lblName)
+									.addComponent(lblGender)
+									.addComponent(lblCMND)
+									.addComponent(lblbutton)
+								)
+						.addGroup(
+								groupLayout.createParallelGroup()
+									.addComponent(MSSV)
+									.addComponent(txtName)
+									.addGroup(groupLayout.createSequentialGroup()
+								              .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								                  .addComponent(radio_male))
+//								                  .addComponent(radio_female))
+								              .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//									                  .addComponent(radio_male)
+									                  .addComponent(radio_female))
+								              )
+									.addComponent(txtCMND)
+									.addComponent(btnSubmit)
+								)
+				);
 
 		groupLayout.setVerticalGroup(
 					groupLayout.createSequentialGroup()
@@ -87,15 +91,15 @@ public class AddStudentDialog extends JDialog {
 								.addComponent(lblName)
 								.addComponent(txtName)
 								)
-						.addGroup(
-								groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addComponent(lblGender)
-									.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-											.addComponent(radio_male)
-											.addComponent(radio_female)
-									)
-								
-								)
+						        .addGroup(groupLayout.createSequentialGroup()
+						            .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						                .addComponent(radio_male)
+						                .addComponent(radio_female))
+						            )
+						           
+						        )
 						.addGroup(
 								groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(lblCMND)
@@ -106,7 +110,7 @@ public class AddStudentDialog extends JDialog {
 								.addComponent(lblbutton)
 								.addComponent(btnSubmit)
 								)
-						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING))
+//						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING))
 					);
 		
 		
