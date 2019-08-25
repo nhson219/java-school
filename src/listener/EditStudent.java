@@ -33,8 +33,6 @@ public class EditStudent implements ActionListener {
 		// TODO Auto-generated method stub
 		try {
 			
-			System.out.print("123");
-			
 //			Student student = new Student();
 //			ManageStudent manageStudent = new ManageStudent();
 //			student.insertStudent(this.MSSV.getText(), this.txtName.getText(), this.txtGender.getText(), this.txtCMND.getText());

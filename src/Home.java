@@ -54,7 +54,7 @@ public class Home {
 		buttonPanel.add(btnImportScore);
 
 		Object[][] tableDataStudent = getDataStudent();
-		String columnStudent[] = { "MSSV", "Họ Tên", "Giới tính ", "CMND" };
+		String columnStudent[] = { "ID", "MSSV", "Họ Tên", "Giới tính ", "CMND" };
 		JTable jtStudent = new JTable(tableDataStudent, columnStudent);
 		JScrollPane spStudent = new JScrollPane(jtStudent);
 
@@ -107,15 +107,16 @@ public class Home {
 	public static Object[][] getDataStudent() {
 		Student student = new Student();
 		List listStudent = student.listStudent();
-		Object[][] tableDataStudent = new Object[listStudent.size()][4];
+		Object[][] tableDataStudent = new Object[listStudent.size()][5];
 
 		int index = 0;
 		for (Iterator iterator = listStudent.iterator(); iterator.hasNext();) {
 			Student currentStudent = (Student) iterator.next();
-			tableDataStudent[index][0] = currentStudent.getMSSV();
-			tableDataStudent[index][1] = currentStudent.getName();
-			tableDataStudent[index][2] = currentStudent.getCMND();
-			tableDataStudent[index][3] = currentStudent.getGender();
+			tableDataStudent[index][0] = currentStudent.getId();
+			tableDataStudent[index][1] = currentStudent.getMSSV();
+			tableDataStudent[index][2] = currentStudent.getName();
+			tableDataStudent[index][3] = currentStudent.getCMND();
+			tableDataStudent[index][4] = currentStudent.getGender();
 			// and so forth
 			index++;
 		}

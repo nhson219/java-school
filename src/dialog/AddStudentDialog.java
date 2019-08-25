@@ -38,7 +38,9 @@ public class AddStudentDialog extends JDialog {
 		
 		JLabel lblGender = new JLabel("Gender");
 		JRadioButton radio_male = new JRadioButton("Male");    
-		JRadioButton radio_female = new JRadioButton("Female");    
+		radio_male.setActionCommand("male");
+		JRadioButton radio_female = new JRadioButton("Female");
+		radio_male.setActionCommand("female");
 		ButtonGroup buttonGroup = new ButtonGroup();    
 		buttonGroup.add(radio_male);buttonGroup.add(radio_female);    
 		
@@ -47,7 +49,7 @@ public class AddStudentDialog extends JDialog {
 		
 		JButton btnSubmit = new JButton();
 		JLabel lblbutton = new JLabel("button");
-//		btnSubmit.addActionListener(new AddStudent(MSSV, txtName, txtGender, txtCMND));
+		btnSubmit.addActionListener(new AddStudent(MSSV, txtName, buttonGroup, txtCMND));
 
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);

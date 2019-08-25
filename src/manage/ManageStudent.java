@@ -54,4 +54,36 @@ public class ManageStudent {
 		}
 		return null;
 	}
+	
+	public Student getStudent() {
+		try {
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		
+		Session session = factory.openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(Student.class);
+            criteria.add(Restrictions.eq("id", 1));
+            
+            Student student = (Student) criteria.uniqueResult();
+
+			tx.commit();
+			return student;
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
 }
