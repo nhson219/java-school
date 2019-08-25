@@ -16,7 +16,6 @@ import javax.swing.SwingConstants;
 public class EditStudentDialog {
 	public EditStudentDialog() {
 
-		System.out.print("123");
 //		JDialog dialog = new JDialog();
 //
 //		GroupLayout groupLayout = new GroupLayout(dialog.getContentPane());

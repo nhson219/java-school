@@ -83,8 +83,8 @@ public class Home {
 		layout.putConstraint(SpringLayout.WEST, spStudent, 2, SpringLayout.WEST, subPanelStudent);
 
 //		layout.putConstraint(SpringLayout.BASELINE, spStudent);
-		System.out.print(jtStudent.getSelectedRow());
-//		btnEditStudent.addActionListener(new ShowEditStudentDialog(jtStudent.getSelectedRow()));
+		
+		btnEditStudent.addActionListener(new ShowEditStudentDialog(jtStudent));
 
 		subPanelSchedule.add(spSchedule);
 		subPanelScore.add(spScore);
