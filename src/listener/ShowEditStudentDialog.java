@@ -9,6 +9,8 @@ import javax.swing.JDialog;
 import dialog.EditStudentDialog;
 
 public class ShowEditStudentDialog implements ActionListener {
+	
+//	public selectedRow;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

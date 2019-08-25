@@ -47,7 +47,7 @@ public class Home {
 		btnImportSchedule.addActionListener(new ShowImportFileSubject());
 		btnImportScore.addActionListener(new ShowImportFileScore());
 		btnAddStudent.addActionListener(new ShowAddStudentDialog());
-		btnEditStudent.addActionListener(new ShowEditStudentDialog());
+		
 
 		buttonPanel.add(btnImportStudent);
 		buttonPanel.add(btnImportSchedule);
@@ -83,6 +83,8 @@ public class Home {
 		layout.putConstraint(SpringLayout.WEST, spStudent, 2, SpringLayout.WEST, subPanelStudent);
 
 //		layout.putConstraint(SpringLayout.BASELINE, spStudent);
+		System.out.print(jtStudent.getSelectedRow());
+//		btnEditStudent.addActionListener(new ShowEditStudentDialog(jtStudent.getSelectedRow()));
 
 		subPanelSchedule.add(spSchedule);
 		subPanelScore.add(spScore);
