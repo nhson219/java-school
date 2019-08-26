@@ -45,7 +45,7 @@ public class ShowEditStudentDialog implements ActionListener {
 			Student data = mng_student.getStudent(id);
 			
 			
-			System.out.print(data.getMSSV());
+			System.out.print(data.getGender());
 			
 			JDialog dialog = new JDialog();
 
@@ -61,11 +61,21 @@ public class ShowEditStudentDialog implements ActionListener {
 			JTextField txtName = new JTextField();
 			txtName.setText(data.getName());
 			
+			Boolean radio_gender_male = false;
+			Boolean radio_gender_female = true;
+			if ((String) data.getGender() == "1") {
+				System.out.print(radio_gender_female);
+				radio_gender_male = true;
+				radio_gender_female = false;
+			}
+			
 			JLabel lblGender = new JLabel("Gender");
 			JRadioButton radio_male = new JRadioButton("Male");    
 			radio_male.setActionCommand("male");
-			JRadioButton radio_female = new JRadioButton("Female");    
-			radio_male.setActionCommand("female");
+			radio_male.setSelected(radio_gender_male);
+			JRadioButton radio_female = new JRadioButton("Female");
+			radio_female.setSelected(radio_gender_female);
+			radio_female.setActionCommand("female");
 			ButtonGroup buttonGroup = new ButtonGroup();    
 			buttonGroup.add(radio_male);
 			buttonGroup.add(radio_female);    

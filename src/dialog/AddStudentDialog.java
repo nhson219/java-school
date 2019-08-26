@@ -39,15 +39,16 @@ public class AddStudentDialog extends JDialog {
 		JLabel lblGender = new JLabel("Gender");
 		JRadioButton radio_male = new JRadioButton("Male");    
 		radio_male.setActionCommand("male");
+		radio_male.setSelected(true);
 		JRadioButton radio_female = new JRadioButton("Female");
-		radio_male.setActionCommand("female");
+		radio_female.setActionCommand("female");
 		ButtonGroup buttonGroup = new ButtonGroup();    
 		buttonGroup.add(radio_male);buttonGroup.add(radio_female);    
 		
 		JLabel lblCMND = new JLabel("CMND");
 		JTextField txtCMND = new JTextField();
 		
-		JButton btnSubmit = new JButton();
+		JButton btnSubmit = new JButton("Submit");
 		JLabel lblbutton = new JLabel("button");
 		btnSubmit.addActionListener(new AddStudent(MSSV, txtName, buttonGroup, txtCMND));
 

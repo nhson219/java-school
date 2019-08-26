@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,6 +44,13 @@ public class Home {
 		JButton btnImportScore = new JButton("Import Score");// creating instance of JButton
 		JButton btnAddStudent = new JButton("Add Student");
 		JButton btnEditStudent = new JButton("Edit Student");
+		
+		JButton btnRefreshStudent = new JButton("Refresh Student");
+		JButton btnRefreshSubject = new JButton("Refresh Subject");
+		JButton btnRefreshScore = new JButton("Refresh Score");
+		
+		
+		
 
 		btnImportStudent.addActionListener(new ShowImportFileStudent());
 		btnImportSchedule.addActionListener(new ShowImportFileSubject());
@@ -57,6 +66,11 @@ public class Home {
 		String columnStudent[] = { "ID", "MSSV", "Họ Tên", "Giới tính ", "CMND" };
 		JTable jtStudent = new JTable(tableDataStudent, columnStudent);
 		JScrollPane spStudent = new JScrollPane(jtStudent);
+		btnRefreshStudent.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){
+				jtStudent.repaint();
+		}  
+		});
 
 		Object[][] tableDataScore = getDataScore();
 		String columnScore[] = { "MSSV", "Họ Tên", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm tổng" };
@@ -71,6 +85,7 @@ public class Home {
 
 		subPanelStudent.add(btnAddStudent);
 		subPanelStudent.add(btnEditStudent);
+		subPanelStudent.add(btnRefreshStudent);
 		subPanelStudent.add(spStudent);
 
 		layout.putConstraint(SpringLayout.NORTH, btnAddStudent, 2, SpringLayout.NORTH, subPanelStudent);
@@ -78,6 +93,9 @@ public class Home {
 
 		layout.putConstraint(SpringLayout.NORTH, btnEditStudent, 2, SpringLayout.NORTH, subPanelStudent);
 		layout.putConstraint(SpringLayout.WEST, btnAddStudent, 2, SpringLayout.EAST, btnEditStudent);
+		
+		layout.putConstraint(SpringLayout.NORTH, btnRefreshStudent, 2, SpringLayout.NORTH, subPanelStudent);
+		layout.putConstraint(SpringLayout.WEST, btnEditStudent, 2, SpringLayout.EAST, btnRefreshStudent);
 
 		layout.putConstraint(SpringLayout.NORTH, spStudent, 2, SpringLayout.SOUTH, btnAddStudent);
 		layout.putConstraint(SpringLayout.WEST, spStudent, 2, SpringLayout.WEST, subPanelStudent);
