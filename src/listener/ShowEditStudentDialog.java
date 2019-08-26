@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import dialog.EditStudentDialog;
 import manage.ManageStudent;
 import object.Student;
+import listener.EditStudent;
 
 public class ShowEditStudentDialog implements ActionListener {
 	
@@ -31,15 +32,17 @@ public class ShowEditStudentDialog implements ActionListener {
 		// TODO Auto-generated method stub
 		try {
 			EditStudentDialog editStudentDialog = new EditStudentDialog();
-//			System.out.print(this.jtStudent.getSelectedRow());
-//			System.out.print(this.jtStudent.getSelectedColumn());
 			
-//			System.out.print(this.jtStudent.getValueAt(this.jtStudent.getSelectedRow(), 0));
+			if (this.jtStudent.getSelectedRow() == -1)
+				return;
 			
 			Integer id = (Integer) this.jtStudent.getValueAt(this.jtStudent.getSelectedRow(), 0);
 			
+			if (id == 0)
+				return;
+			
 			ManageStudent mng_student = new ManageStudent();
-			Student data = mng_student.getStudent();
+			Student data = mng_student.getStudent(id);
 			
 			
 			System.out.print(data.getMSSV());
@@ -60,17 +63,20 @@ public class ShowEditStudentDialog implements ActionListener {
 			
 			JLabel lblGender = new JLabel("Gender");
 			JRadioButton radio_male = new JRadioButton("Male");    
+			radio_male.setActionCommand("male");
 			JRadioButton radio_female = new JRadioButton("Female");    
+			radio_male.setActionCommand("female");
 			ButtonGroup buttonGroup = new ButtonGroup();    
-			buttonGroup.add(radio_male);buttonGroup.add(radio_female);    
+			buttonGroup.add(radio_male);
+			buttonGroup.add(radio_female);    
 			
 			JLabel lblCMND = new JLabel("CMND");
 			JTextField txtCMND = new JTextField();
 			txtCMND.setText(data.getCMND());
 			
-			JButton btnSubmit = new JButton();
+			JButton btnSubmit = new JButton("Submit");
 			JLabel lblbutton = new JLabel("button");
-//			btnSubmit.addActionListener(new AddStudent(MSSV, txtName, txtGender, txtCMND));
+			btnSubmit.addActionListener(new EditStudent(id, MSSV, txtName, buttonGroup, txtCMND));
 
 			groupLayout.setAutoCreateGaps(true);
 			groupLayout.setAutoCreateContainerGaps(true);

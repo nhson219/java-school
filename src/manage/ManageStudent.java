@@ -55,7 +55,7 @@ public class ManageStudent {
 		return null;
 	}
 	
-	public Student getStudent() {
+	public Student getStudent(int id) {
 		try {
 			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 		} catch (Throwable ex) {
@@ -70,7 +70,7 @@ public class ManageStudent {
 			tx = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("id", 1));
+            criteria.add(Restrictions.eq("id", id));
             
             Student student = (Student) criteria.uniqueResult();
 
@@ -85,5 +85,34 @@ public class ManageStudent {
 			session.close();
 		}
 		return null;
+	}
+	
+	public boolean editStudent(int ID, Student student) {
+		try {
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		
+		Session session = factory.openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			student.setId(ID);
+			session.saveOrUpdate(student);
+
+			tx.commit();
+			return true;
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return false;
 	}
 }
